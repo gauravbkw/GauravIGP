@@ -1,0 +1,3 @@
+curl -s0 http://localhost:8080/jnlpJars/agent.jar
+java -jar agent.jar -url http://localhost:8080/ -secret -name Master -webSocket -wrokDir ""
+java -jar agent.jar -url http://localhost:8080/ -secret -name Master -webSocket -wrokDir ""
