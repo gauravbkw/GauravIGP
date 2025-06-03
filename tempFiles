@@ -1,3 +1,49 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Git branch to build')
+    }
+    stages {
+        stage('Code Checkout - Master') {
+            agent { label 'Jmaster' }  // Ensures this stage runs on the master node
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: "*/${params.BRANCH_NAME}"]], userRemoteConfigs: [[url: 'https://github.com/gauravbkw/GauravIGP.git']]])
+            }
+        }
+        
+        stage('Code Checkout - Slave') {
+            agent { label 'Jsalve' }  // Ensures this stage runs on the slave node
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: "*/${params.BRANCH_NAME}"]], userRemoteConfigs: [[url: 'https://github.com/gauravbkw/GauravIGP.git']]])
+            }
+        }
+
+        stage('Code Compile') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+
+        stage('Unit Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Code Packaging') {
+            steps {
+                sh 'mvn package'
+            }
+        }
+    }
+}
+
+
+
+
+
+
+================
 pipeline
 {
         agent any
