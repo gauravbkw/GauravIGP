@@ -18,42 +18,42 @@ pipeline {
             }
         }
 
-        stage('Code Compile') {
+        stage('Code Compile - Slave') {
             agent { label 'JSlave' }
             steps {
                 sh 'mvn compile'
             }
         }
 
-        stage('Unit Test') {
+        stage('Unit Test -Slave') {
             agent { label 'JSlave' }
             steps {
                 sh 'mvn test'
             }
         }
 
-        stage('Code Packaging') {
+        stage('Code Packaging Slave') {
             agent { label 'JSlave' }
             steps {
                 sh 'mvn package'
             }
         }
         
-                stage('Code Compile') {
+                stage('Code Compile Master') {
             agent { label 'Jmaster' }
             steps {
                 sh 'mvn compile'
             }
         }
 
-        stage('Unit Test') {
+        stage('Unit Test master') {
             agent { label 'Jmaster' }
             steps {
                 sh 'mvn test'
             }
         }
 
-        stage('Code Packaging') {
+        stage('Code Packaging master') {
             agent { label 'Jmaster' }
             steps {
                 sh 'mvn package'
